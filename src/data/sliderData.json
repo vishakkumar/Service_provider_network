@@ -1,0 +1,27 @@
+[
+    {
+      "service": "Electrician",
+      "business_name": "Voltify Sparks",
+      "discription": "High-quality electrical repairs & installations with certified experts. Power your space safely.",
+      "image": "https://www.automationroboticscollege.com/wp-content/uploads/2023/04/Electrical-Technician-India-min.jpg"
+    },
+    {
+      "service": "Photography",
+      "business_name": "Pixel Prism",
+      "discription": "Capture memories in style. Events, portraits & creative photography with a cinematic flair.",
+      "image": "https://th.bing.com/th/id/OLC.y2HOxfJe0alQ6g480x360?&rs=1&pid=ImgDetMain"
+    },
+    {
+      "service": "Computer Service",
+      "business_name": "TechNova",
+      "discription": "Fast computer repairs, upgrades & virus removal. Your digital systems, optimized.",
+      "image": "https://th.bing.com/th/id/R.d2e6dd38ef7ff60114960bf4714c306b?rik=UsOqgyyC%2friPfQ&riu=http%3a%2f%2fboilertechsolutions.com%2fwp-content%2fuploads%2f2021%2f02%2fbts-tech-support-computer-repair.jpg&ehk=WGIEA2pv4MesSjdiIpvSr%2b9uss%2b%2fx6xkXGAhFhrP%2bgA%3d&risl=&pid=ImgRaw&r=0"
+    },
+    {
+      "service": "Plumbing",
+      "business_name": "HydroFix",
+      "discription": "Leak-free plumbing solutions, installations, and maintenance with modern tools & skilled hands.",
+      "image": "https://thumbs.dreamstime.com/b/handyman-repairing-faucet-sink-bathroom-maintenance-household-assistance-concept-close-up-indian-plumber-264239059.jpg"
+    }
+  ]
+  

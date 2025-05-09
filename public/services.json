@@ -1,0 +1,186 @@
+{
+    "services": [
+        {
+            "id": 1,
+            "business_name": "Bhagwati Electricals",
+            "service": "Electrician",
+            "name": "Aravinth",
+            "description": "We offer professional electrician services for homes, offices, and businesses. From installations to repairs, our team ensures safe and reliable solutions.",
+            "image":"https://backgroundimages.withfloats.com/actual/642d67bd6731de00014b1546.jpg",
+            "our_services": [
+                "Electrical Wiring & Rewiring",
+                "Lighting Installation & Repair",
+                "Switchboard & Panel Upgrades",
+                "Fault Finding & Troubleshooting",
+                "Home & Commercial Electrical Solutions",
+                "Emergency Electrical Repairs"
+            ],
+            "focus": "With a focus on quality, safety, and customer satisfaction, we guarantee affordable pricing and timely service.",
+            "contact": {
+                "phone": " 8978675643",
+                "location": "Kottar, Nagercoil"
+            },
+            "ratings": [ { "customerId": "user123", "value": 2 }]
+        },
+        {
+            "id": 2,
+            "business_name": "Sri Krishna Plumbing Solutions",
+            "service": "Plumbing Service",
+            "name": "Sri Krishna Plumbing",
+            "description": "We offer professional plumbing services for residential and commercial spaces, ensuring efficient and long-lasting solutions.",
+            "image":"https://content3.jdmagicbox.com/comp/srikakulam/c1/9999p8942.8942.190916174843.g3c1/catalogue/sri-krishna-electrical-and-plumbing-srikakulam-yxpjhvijia.jpg?clr=2d3939",
+            "our_services": [
+                "Pipe Installation & Repair",
+                "Leak Detection & Fixing",
+                "Bathroom & Kitchen Plumbing",
+                "Water Heater Installation",
+                "Drain Cleaning",
+                "Emergency Plumbing Services"
+            ],
+            "focus": "Reliable and affordable plumbing solutions with a commitment to quality and customer satisfaction.",
+            "contact": {
+                "phone": "7869503120",
+                "location": "Marthandam"
+            }
+        },
+        {
+            "id": 3,
+            "business_name": "Manoj Wood Creations",
+            "service": "Wood Works And Design",
+            "name": "Manoj",
+            "description": "We specialize in custom woodwork and design for homes and businesses, bringing creativity and craftsmanship together.",
+            "our_services": [
+                "Custom Furniture Making",
+                "Interior & Exterior Woodwork",
+                "Modular Kitchen & Wardrobes",
+                "Doors & Windows Installation",
+                "Wood Polishing & Restoration",
+                "Carpentry Services"
+            ],
+            "focus": "High-quality craftsmanship with unique designs tailored to your preferences.",
+            "contact": {
+                "phone": "7654321098",
+                "location": "Thuckalay"
+            }
+        },
+        {
+            "id": 4,
+            "business_name": "Vikram IT Solutions",
+            "service": "Computer Service",
+            "name": "Vikram",
+            "description": "We provide expert computer repair and IT support services for individuals and businesses, ensuring smooth and secure operations.",
+            "our_services": [
+                "Laptop & Desktop Repair",
+                "Software Installation & Troubleshooting",
+                "Data Recovery & Backup",
+                "Network Setup & Security",
+                "Hardware Upgrades",
+                "Virus & Malware Removal"
+            ],
+            "focus": "Fast and reliable computer services at affordable rates.",
+            "contact": {
+                "phone": "7890123456",
+                "location": "Monday Market"
+            }
+        },
+        {
+            "id": 5,
+            "business_name": "Suresh Builders & Developers",
+            "service": "Building Construction",
+            "name": "Suresh",
+            "description": "We offer comprehensive building construction services, from planning and design to execution and completion.",
+            "our_services": [
+                "Residential & Commercial Construction",
+                "Renovation & Remodeling",
+                "Structural Engineering",
+                "Interior & Exterior Design",
+                "Project Management",
+                "Waterproofing & Roofing"
+            ],
+            "focus": "Delivering high-quality, durable, and cost-effective construction solutions.",
+            "contact": {
+                "phone": "8901234567",
+                "location": "Kaniyakumari"
+            }
+        },
+        {
+            "id": 6,
+            "business_name": "Delicious Catering Services",
+            "service": "Catering Service",
+            "name": "Ravi",
+            "description": "We provide top-quality catering services for all occasions, offering a variety of cuisines and customized menus.",
+            "our_services": [
+                "Wedding & Event Catering",
+                "Corporate Catering",
+                "Buffet & Live Counters",
+                "Customized Menu Planning",
+                "Vegetarian & Non-Vegetarian Dishes",
+                "Hygienic & Fresh Food Preparation"
+            ],
+            "focus": "Delicious food and excellent service to make your event memorable.",
+            "contact": {
+                "phone": "8765432109",
+                "location": "Parakai"
+            }
+        },
+        {
+            "id": 7,
+            "business_name": "Friends Digital Studio",
+            "service": "Professional Photography",
+            "name": "Naga Prabhu",
+            "description": "We capture your special moments with high-quality professional photography services for all events and occasions.",
+            "our_services": [
+                "Wedding & Engagement Photography",
+                "Event & Corporate Photography",
+                "Portrait & Family Photography",
+                "Product & Commercial Shoots",
+                "Photo Editing & Retouching",
+                "Videography Services"
+            ],
+            "focus": "Creating timeless memories with expert photography and videography.",
+            "contact": {
+                "phone": "9876543210",
+                "location": "Nagercoil Vadasary"
+            }
+        },
+        {
+            "id": 8,
+            "business_name": "Valli Electronics",
+            "service": "Electronics Spares ",
+            "name": "ValliNayagam",
+            "description": " We Provide High Quality Electronics Components,Spares like Microcontroller IC,Resistor,Capacitor,Transistor etc. also provide Tv Service an Sales",
+            "our_services": [
+                " All Brands TV Spares and Board",
+                " Tv Service ",
+                " CCTV Camera and Installation",
+                "Amplifer ,Induction Stove, DVD Player and other Elctronics product Services  ",
+                "Engineering Project Spares"
+            ],
+            "focus": "Focus on Best Quality, Best Price, Best Service",
+            "contact": {
+                "phone": "9876543210",
+                "location": "Nagercoil Allexander Press"
+            }
+        },
+        {
+            "id": 9,
+            "business_name": "Aravinth Electricals",
+            "service": "Electrician",
+            "name": "Aravinth",
+            "description": "We offer professional electrician services for homes, offices, and businesses. From installations to repairs, our team ensures safe and reliable solutions.",
+            "our_services": [
+                "Electrical Wiring & Rewiring",
+                "Lighting Installation & Repair",
+                "Switchboard & Panel Upgrades",
+                "Fault Finding & Troubleshooting",
+                "Home & Commercial Electrical Solutions",
+                "Emergency Electrical Repairs"
+            ],
+            "focus": "With a focus on quality, safety, and customer satisfaction, we guarantee affordable pricing and timely service.",
+            "contact": {
+                "phone": " 8978675643",
+                "location": "Kottar, Nagercoil"
+            }
+        }
+    ]
+}
