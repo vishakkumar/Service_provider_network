@@ -8,41 +8,49 @@ import {
   Link,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 
 const SignIn = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [gender,setGender] = useState("male");
+
   const navigate = useNavigate();
 
-  const handleSignUp = async (e) => {
-    e.preventDefault();
+const handleSignUp = async (e) => {
+  e.preventDefault();
 
-    if (name && email && password) {
-      const userData = { name, email, password };
+  if (name && email && password && gender) {
+    const userData = { name, email, password, gender };
 
-      try {
-        const response = await fetch("http://localhost:3000/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(userData),
-        });
+    try {
+      const response = await fetch("http://localhost:3000/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
 
-        if (response.ok) {
-          console.log("User registered:", name);
-          navigate("/"); // Redirect after successful sign-up
-        } else {
-          const errorData = await response.json();
-          alert("Registration failed: " + errorData.message);
-        }
-      } catch (error) {
-        console.error("Error during registration:", error);
-        alert("An error occurred while registering.");
+      if (response.ok) {
+        console.log("User registered:", userData);
+        navigate("/");
+      } else {
+        const errorData = await response.json();
+        alert("Registration failed: " + errorData.message);
       }
+    } catch (error) {
+      console.error("Error during registration:", error);
+      alert("An error occurred while registering.");
     }
-  };
+  }
+};
+
 
 
   return (
@@ -92,19 +100,33 @@ const SignIn = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-
+           <FormControl>
+            <FormLabel id="demo-radio-buttons-group-label" color="black">Gender</FormLabel>
+            <RadioGroup
+              aria-labelledby="demo-radio-buttons-group-label"
+              name="gender"
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+            >
+              <Box>
+              <FormControlLabel value="female" control={<Radio />} label="Female" />
+              <FormControlLabel value="male" control={<Radio />} label="Male" />
+              <FormControlLabel value="other" control={<Radio />} label="Other" />
+              </Box>
+              </RadioGroup>
+          </FormControl>
           <Button
             type="submit"
             variant="contained"
-            // color="primary"
+            // color="orange"
             fullWidth
-            sx={{ bgcolor:'red',mt: 2, borderRadius: "20px" }}
+            sx={{ bgcolor:'orange',mt: 2, borderRadius: "20px" }}
           >
             Sign Up
           </Button>
 
           <Box sx={{ textAlign: "center", mt: 2 }}>
-            <Link href="/login" variant="body2" underline="hover">
+            <Link href="/login" variant="body2" underline="hover" >
               Already have an account? Login
             </Link>
           </Box>

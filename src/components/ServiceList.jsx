@@ -225,7 +225,7 @@ const ServiceList = ({ search, category, location, businessName }) => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/services");
+        const response = await axios.get("http://localhost:5000/services");
         setServices(response.data);
       } catch (err) {
         setError("Failed to fetch services. Please try again later.");
@@ -325,7 +325,6 @@ const ServiceList = ({ search, category, location, businessName }) => {
         >
           No services found matching your criteria.
         </Typography>
-        
       ) : (
         <>
           <Grid container spacing={3} mt={1}>

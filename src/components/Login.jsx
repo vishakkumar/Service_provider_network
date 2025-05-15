@@ -29,7 +29,7 @@ const Login = () => {
 
     if (email && password) {
       try {
-        const response = await fetch("http://localhost:3000/register");
+        const response = await fetch("http://localhost:5000/register");
         const users = await response.json();
 
         const matchedUser = users.find(
@@ -72,10 +72,10 @@ const Login = () => {
     >
       <Box
         sx={{
-          width: "90%",
-          display: "flex",
-          justifyContent: "flex-end",
-          alignItems: "center",
+          // width: "90%",
+          // display: "flex",
+          // justifyContent: "flex-end",
+          // alignItems: "center",
           // bgcolor: "gray",
         }}
       >
