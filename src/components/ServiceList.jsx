@@ -218,15 +218,15 @@ const ServiceList = ({ search, category, location, businessName }) => {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [wishlist, setWishlist] = useState({});
-  const itemsPerPage = 10;
+  const itemsPerPage = 12;
   const navigate = useNavigate();
   const [value, setValue] =useState(0);
 
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get("./services.json");
-        setServices(response.data.services);
+        const response = await axios.get("http://localhost:3000/services");
+        setServices(response.data);
       } catch (err) {
         setError("Failed to fetch services. Please try again later.");
         console.error("Error fetching data:", err);
@@ -236,18 +236,15 @@ const ServiceList = ({ search, category, location, businessName }) => {
     };
     fetchServices();
   }, []);
-
   const toggleWishlist = (id) => {
     setWishlist((prev) => ({ ...prev, [id]: !prev[id] }));
   };
-
   const handleShare = (service) => {
     const shareData = {
       title: service.business_name,
       text: `${service.business_name} offers ${service.service} in ${service.contact.location}`,
       url: window.location.origin + `/service/${service.id}`,
     };
-
     if (navigator.share) {
       navigator.share(shareData).catch((err) =>
         console.error("Sharing failed:", err)
@@ -257,7 +254,6 @@ const ServiceList = ({ search, category, location, businessName }) => {
       alert("Link copied to clipboard!");
     }
   };
-
   const filteredServices = services.filter((service) => {
     const matchesSearch = search
       ? service.service.toLowerCase().includes(search.toLowerCase()) ||
@@ -329,6 +325,7 @@ const ServiceList = ({ search, category, location, businessName }) => {
         >
           No services found matching your criteria.
         </Typography>
+        
       ) : (
         <>
           <Grid container spacing={3} mt={1}>
@@ -338,6 +335,7 @@ const ServiceList = ({ search, category, location, businessName }) => {
                   <Card
                     sx={{
                       maxWidth: 345,
+                      height:'450px',
                       margin: "auto",
                       background: "#fff",
                       boxShadow: 6,
@@ -416,7 +414,7 @@ const ServiceList = ({ search, category, location, businessName }) => {
                             handleShare(service);
                           }}
                         >
-                          <ShareIcon />
+                        <ShareIcon />
                         </IconButton>
                       </Tooltip>
                       <Tooltip title="Add to Wishlist">
@@ -440,7 +438,6 @@ const ServiceList = ({ search, category, location, businessName }) => {
               </Fade>
             ))}
           </Grid>
-
           <Box display="flex" justifyContent="center" mt={4}>
             <Pagination
               count={totalPages}
@@ -457,7 +454,6 @@ const ServiceList = ({ search, category, location, businessName }) => {
     </Box>
   );
 };
-
 export default ServiceList;
 
 

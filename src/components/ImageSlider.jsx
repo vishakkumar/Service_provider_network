@@ -1,130 +1,296 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Box, Typography, CircularProgress } from "@mui/material";
 import "swiper/css";
 import "swiper/css/pagination";
 
-import sliderData from "../data/sliderData.json"
-
 const ImageSlider = () => {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true); // loading state
+  const [error, setError] = useState(null);     // error state
 
   useEffect(() => {
     const fetchProducts = async () => {
-      await new Promise((res) => setTimeout(res, 700)); // Simulate delay
-      setProducts(sliderData);
+      try {
+        const response = await axios.get("http://localhost:3000/add");
+        setProducts(response.data);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        setError("Failed to load slider data.");
+      } finally {
+        setLoading(false);
+      }
     };
+
     fetchProducts();
   }, []);
 
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress sx={{ color: "#FBA518" }} />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Typography color="error">{error}</Typography>
+      </Box>
+    );
+  }
+
   return (
-    <Box sx={{ width: "100%", height: "80vh" ,}}>
-      {products.length ? (
-        <Swiper
-          modules={[Autoplay, Pagination]}
-          spaceBetween={0}
-          slidesPerView={1}
-          autoplay={{ delay: 4000, disableOnInteraction: false }}
-          pagination={{ clickable: true }}
-          loop
-          style={{ width: "100%", height: "100%" }}
-        >
-          {products.map((product, index) => (
-            <SwiperSlide key={index}>
+    <Box sx={{ width: "100%", height: "80vh" }}>
+      <Swiper
+        modules={[Autoplay, Pagination]}
+        spaceBetween={0}
+        slidesPerView={1}
+        autoplay={{ delay: 4000, disableOnInteraction: false }}
+        pagination={{ clickable: true }}
+        loop
+        style={{ width: "100%", height: "100%" }}
+      >
+        {products.map((product, index) => (
+          <SwiperSlide key={index}>
+            <Box
+              sx={{
+                position: "relative",
+                width: "100%",
+                height: "100%",
+                backgroundImage: `url(${product.image})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-start",
+                px: { xs: 3, sm: 6 },
+              }}
+            >
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  background:
+                    "linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4))",
+                  zIndex: 1,
+                }}
+              />
               <Box
                 sx={{
                   position: "relative",
-                  width: "100%",
-                  height: "100%",
-                  backgroundImage: `url(${product.image})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "flex-start",
-                  px: { xs: 3, sm: 6 },
+                  zIndex: 2,
+                  color: "#fff",
+                  maxWidth: { xs: "100%", sm: "60%" },
                 }}
               >
-                <Box
+                <Typography
+                  variant="h6"
                   sx={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    background:
-                      "linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4))",
-                    zIndex: 1,
-                  }}
-                />
-                <Box
-                  sx={{
-                    position: "relative",
-                    zIndex: 2,
-                    color: "#fff",
-                    maxWidth: { xs: "100%", sm: "60%" },
+                    textTransform: "uppercase",
+                    letterSpacing: 1,
+                    fontWeight: 700,
+                    color: "#FBA518",
+                    mb: 1,
                   }}
                 >
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      textTransform: "uppercase",
-                      letterSpacing: 1,
-                      fontWeight: 700,
-                      color: "#FBA518",
-                      mb: 1,
-                    }}
-                  >
-                    {/* {product.business_name} */}
-                  </Typography>
+                  {/* {product.business_name} */}
+                </Typography>
 
-                  <Typography
-                    variant="h3"
-                    sx={{
-                      fontWeight: 800,
-                      fontFamily: `'Orbitron', sans-serif`,
-                      lineHeight: 1.2,
-                      mb: 2,
-                      textShadow: "0px 2px 10px #000",
-                    }}
-                  >
-                    {product.service}
-                  </Typography>
+                <Typography
+                  variant="h3"
+                  sx={{
+                    fontWeight: 800,
+                    fontFamily: `'Orbitron', sans-serif`,
+                    lineHeight: 1.2,
+                    mb: 2,
+                    textShadow: "0px 2px 10px #000",
+                  }}
+                >
+                  {product.service}
+                </Typography>
 
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      fontSize: "1.1rem",
-                      opacity: 0.9,
-                      lineHeight: 1.7,
-                      mb: 3,
-                    }}
-                  >
-                    {product.discription}
-                  </Typography>
-                </Box>
+                <Typography
+                  variant="h3"
+                  sx={{
+                    fontSize: "1.1rem",
+                    opacity: 0.9,
+                    lineHeight: 1.7,
+                    mb: 3,
+                  }}
+                >
+                  {product.description}
+                </Typography>
               </Box>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      ) : (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-          }}
-        >
-          <CircularProgress sx={{ color: "#FBA518" }} />
-        </Box>
-      )}
+            </Box>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </Box>
   );
 };
 
 export default ImageSlider;
+
+
+
+// import React, { useEffect, useState } from "react";
+// import { Swiper, SwiperSlide } from "swiper/react";
+// import { Autoplay, Pagination } from "swiper/modules";
+// import { Box, Typography, CircularProgress } from "@mui/material";
+// import "swiper/css";
+// import "swiper/css/pagination";
+
+// // import sliderData from "http://localhost:3000/add"
+
+// const ImageSlider = () => {
+//   const [products, setProducts] = useState([]);
+
+//   // console.log(sliderData)
+
+// useEffect(() => {
+//     const fetchProducts = async () => {
+//       try {
+//         const response = await axios.get("http://localhost:3000/add");
+//         setProducts(response.data);
+//       } catch (err) {
+//         console.error("Error fetching data:", err);
+//         setError("Failed to load slider data.");
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchProducts();
+//   }, []);
+
+//   return (
+//     <Box sx={{ width: "100%", height: "80vh" ,}}>
+//       {products.length ? (
+//         <Swiper
+//           modules={[Autoplay, Pagination]}
+//           spaceBetween={0}
+//           slidesPerView={1}
+//           autoplay={{ delay: 4000, disableOnInteraction: false }}
+//           pagination={{ clickable: true }}
+//           loop
+//           style={{ width: "100%", height: "100%" }}
+//         >
+//           {products.map((product, index) => (
+//             <SwiperSlide key={index}>
+//               <Box
+//                 sx={{
+//                   position: "relative",
+//                   width: "100%",
+//                   height: "100%",
+//                   backgroundImage: `url(${product.image})`,
+//                   backgroundSize: "cover",
+//                   backgroundPosition: "center",
+//                   display: "flex",
+//                   alignItems: "center",
+//                   justifyContent: "flex-start",
+//                   px: { xs: 3, sm: 6 },
+//                 }}
+//               >
+//                 <Box
+//                   sx={{
+//                     position: "absolute",
+//                     top: 0,
+//                     left: 0,
+//                     width: "100%",
+//                     height: "100%",
+//                     background:
+//                       "linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4))",
+//                     zIndex: 1,
+//                   }}
+//                 />
+//                 <Box
+//                   sx={{
+//                     position: "relative",
+//                     zIndex: 2,
+//                     color: "#fff",
+//                     maxWidth: { xs: "100%", sm: "60%" },
+//                   }}
+//                 >
+//                   <Typography
+//                     variant="h6"
+//                     sx={{
+//                       textTransform: "uppercase",
+//                       letterSpacing: 1,
+//                       fontWeight: 700,
+//                       color: "#FBA518",
+//                       mb: 1,
+//                     }}
+//                   >
+//                     {/* {product.business_name} */}
+//                   </Typography>
+
+//                   <Typography
+//                     variant="h3"
+//                     sx={{
+//                       fontWeight: 800,
+//                       fontFamily: `'Orbitron', sans-serif`,
+//                       lineHeight: 1.2,
+//                       mb: 2,
+//                       textShadow: "0px 2px 10px #000",
+//                     }}
+//                   >
+//                     {product.service}
+//                   </Typography>
+
+//                   <Typography
+//                     variant="body1"
+//                     sx={{
+//                       fontSize: "1.1rem",
+//                       opacity: 0.9,
+//                       lineHeight: 1.7,
+//                       mb: 3,
+//                     }}
+//                   >
+//                     {product.discription}
+//                   </Typography>
+//                 </Box>
+//               </Box>
+//             </SwiperSlide>
+//           ))}
+//         </Swiper>
+//       ) : (
+//         <Box
+//           sx={{
+//             display: "flex",
+//             justifyContent: "center",
+//             alignItems: "center",
+//             height: "100vh",
+//           }}
+//         >
+//           <CircularProgress sx={{ color: "#FBA518" }} />
+//         </Box>
+//       )}
+//     </Box>
+//   );
+// };
+
+// export default ImageSlider;
 
 
 

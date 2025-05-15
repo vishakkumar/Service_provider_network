@@ -15,19 +15,35 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
 
     if (name && email && password) {
       const userData = { name, email, password };
-      localStorage.setItem("user", JSON.stringify(userData));
-      localStorage.setItem("flag", "1");
 
-      console.log("User registered:", name);
+      try {
+        const response = await fetch("http://localhost:3000/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        });
 
-      navigate("/"); // Redirect after sign-up (or to login)
+        if (response.ok) {
+          console.log("User registered:", name);
+          navigate("/"); // Redirect after successful sign-up
+        } else {
+          const errorData = await response.json();
+          alert("Registration failed: " + errorData.message);
+        }
+      } catch (error) {
+        console.error("Error during registration:", error);
+        alert("An error occurred while registering.");
+      }
     }
   };
+
 
   return (
     <Box
