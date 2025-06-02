@@ -1,188 +1,3 @@
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import {
-//   Card, CardContent, Typography, Grid, CircularProgress, Alert, Box, Stack,
-//   Pagination, CardMedia, CardHeader, Avatar, IconButton, CardActions, Tooltip
-// } from "@mui/material";
-// import { useNavigate } from "react-router-dom";
-// import { Fade } from "@mui/material";
-// import LocationOnIcon from "@mui/icons-material/LocationOn";
-// import PhoneIcon from "@mui/icons-material/Phone";
-// import FavoriteIcon from "@mui/icons-material/Favorite";
-// import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-// import ShareIcon from "@mui/icons-material/Share";
-// import Rating from '@mui/material/Rating';
-
-// const ServiceList = ({ search, category, location, businessName }) => {
-//   const [services, setServices] = useState([]);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState(null);
-//   const [currentPage, setCurrentPage] = useState(1);
-//   const [wishlist, setWishlist] = useState({});
-//   const itemsPerPage = 10;
-//   const navigate = useNavigate();
-
-//   const currentUserId = "user123"; // Replace with actual user context if available
-
-//   useEffect(() => {
-//     const fetchServices = async () => {
-//       try {
-//         // const response = await axios.get("./services.json");
-//         const response = await axios.get("http://localhost:5000/services/"); 
-//         setServices(response.data.services);
-//       } catch (err) {
-//         setError("Failed to fetch services.");
-//         console.error(err);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-//     fetchServices();
-//   }, []);
-
-//   const toggleWishlist = (id) => {
-//     setWishlist((prev) => ({ ...prev, [id]: !prev[id] }));
-//   };
-
-//   const handleShare = (service) => {
-//     const shareData = {
-//       title: service.business_name,
-//       text: `${service.business_name} offers ${service.service}`,
-//       url: window.location.origin + `/service/${service.id}`,
-//     };
-//     if (navigator.share) {
-//       navigator.share(shareData).catch((err) => console.error("Share failed", err));
-//     } else {
-//       navigator.clipboard.writeText(shareData.url);
-//       alert("Link copied!");
-//     }
-//   };
-
-//   const filteredServices = services.filter((service) => {
-//     const matchesSearch = search
-//       ? service.service.toLowerCase().includes(search.toLowerCase()) ||
-//         service.business_name.toLowerCase().includes(search.toLowerCase())
-//       : true;
-//     const matchesCategory = category && category !== "all" ? service.service === category : true;
-//     const matchesLocation = location && location !== "all" ? service.contact.location === location : true;
-//     const matchesBusiness = businessName && businessName !== "all" ? service.business_name === businessName : true;
-//     return matchesSearch && matchesCategory && matchesLocation && matchesBusiness;
-//   });
-
-//   const totalPages = Math.ceil(filteredServices.length / itemsPerPage);
-//   const paginatedServices = filteredServices.slice(
-//     (currentPage - 1) * itemsPerPage,
-//     currentPage * itemsPerPage
-//   );
-
-//   const handleRatingChange = async (serviceId, newValue) => {
-//     try {
-//       const updated = services.map((service) => {
-//         if (service.id === serviceId) {
-//           const existing = service.ratings?.find((r) => r.customerId === currentUserId);
-//           if (existing) {
-//             existing.value = newValue;
-//           } else {
-//             if (!service.ratings) service.ratings = [];
-//             service.ratings.push({ customerId: currentUserId, value: newValue });
-//           }
-//         }
-//         return service;
-//       });
-//       setServices(updated);
-
-//       await axios.post("http://localhost:5000/services/ratings", {
-//         serviceId,
-//         customerId: currentUserId,
-//         value: newValue,
-//       });
-//     } catch (error) {
-//       console.error("Failed to save rating:", error);
-//     }
-//   };
-
-//   if (loading) return <CircularProgress sx={{ m: "40px auto", display: "block" }} />;
-//   if (error) return <Alert severity="error">{error}</Alert>;
-
-//   return (
-//     <Box sx={{ width: "95%", margin: "auto", pb: 4 }}>
-//       <Typography variant="h4" textAlign="center" sx={{ pt: 3, fontWeight: 700 }}>
-//         Explore Services Around You
-//       </Typography>
-
-//       {filteredServices.length === 0 ? (
-//         <Typography variant="h6" textAlign="center" mt={4}>
-//           No services found matching your criteria.
-//         </Typography>
-//       ) : (
-//         <>
-//           <Grid container spacing={3} mt={1}>
-//             {paginatedServices.map((service) => {
-//               const userRating = service.ratings?.find((r) => r.customerId === currentUserId)?.value || 0;
-//               return (
-//                 <Fade in={true} timeout={600} key={service.id}>
-//                   <Grid item xs={12} sm={6} md={3}>
-//                     <Card sx={{ maxWidth: 345, margin: "auto", boxShadow: 6, borderRadius: 4 }}>
-//                       <CardHeader
-//                         avatar={<Avatar sx={{ bgcolor: "#FF6201" }}>{service.business_name[0]}</Avatar>}
-//                         title={service.business_name}
-//                         subheader={service.service}
-//                       />
-//                       <CardMedia
-//                         component="img"
-//                         height="194"
-//                         image={service.image || "https://via.placeholder.com/400x300"}
-//                         alt={service.business_name}
-//                       />
-//                       <CardContent>
-//                         <Typography variant="body2" color="text.secondary" gutterBottom>
-//                           {service.description}
-//                         </Typography>
-//                         <Stack direction="row" spacing={1} alignItems="center" mb={1}>
-//                           <LocationOnIcon fontSize="small" />
-//                           <Typography variant="body2">{service.contact.location}</Typography>
-//                         </Stack>
-//                       </CardContent>
-
-//                       <CardActions disableSpacing>
-//                         <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', px: 1 }}>
-//                           <Rating
-//                             value={userRating}
-//                             onChange={(e, newValue) => {
-//                               e.stopPropagation();
-//                               handleRatingChange(service.id, newValue);
-//                             }}
-//                           />
-//                           <Box>
-//                             <Tooltip title="Share">
-//                               <IconButton onClick={(e) => { e.stopPropagation(); handleShare(service); }}>
-//                                 <ShareIcon />
-//                               </IconButton>
-//                             </Tooltip>
-//                             <Tooltip title="Add to Wishlist">
-//                               <IconButton onClick={(e) => { e.stopPropagation(); toggleWishlist(service.id); }}>
-//                                 {wishlist[service.id] ? <FavoriteIcon sx={{ color: "#e53935" }} /> : <FavoriteBorderIcon />}
-//                               </IconButton>
-//                             </Tooltip>
-//                           </Box>
-//                         </Box>
-//                       </CardActions>
-//                     </Card>
-//                   </Grid>
-//                 </Fade>
-//               );
-//             })}
-//           </Grid>
-//           <Box display="flex" justifyContent="center" mt={4}>
-//             <Pagination count={totalPages} page={currentPage} onChange={(e, val) => setCurrentPage(val)} />
-//           </Box>
-//         </>
-//       )}
-//     </Box>
-//   );
-// };
-
-// export default ServiceList;
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -372,7 +187,9 @@ const ServiceList = ({ search, category, location, businessName }) => {
                         color="text.secondary"
                         gutterBottom
                       >
-                        {service.description}
+                        {service.description.length > 100
+                          ? service.description.slice(0, 99) + '...'
+                          : service.description}
                       </Typography>
 
                       <Stack
@@ -395,16 +212,17 @@ const ServiceList = ({ search, category, location, businessName }) => {
                       </Stack> */}
                     </CardContent>
 
-                    <CardActions disableSpacing>
+                    <CardActions disableSpacing sx={{mb:'5'}}>
                     <Box sx={{display:'flex',width:'300px',justifyContent:'space-between', alignItems:'center'}}>
-                    <Tooltip>
+                    {/* <Tooltip>
                       <Rating
                         value={value}
-                        onChange={(event, newValue) => {
+                        onChange={(e, newValue) => {
+                          e.preventDefault();
                           setValue(newValue);
                         }}
                       />
-                        </Tooltip>
+                        </Tooltip> */}
                       <Box>
                       <Tooltip title="Share">
                         <IconButton
@@ -454,6 +272,193 @@ const ServiceList = ({ search, category, location, businessName }) => {
   );
 };
 export default ServiceList;
+
+
+// import React, { useState, useEffect } from "react";
+// import axios from "axios";
+// import {
+//   Card, CardContent, Typography, Grid, CircularProgress, Alert, Box, Stack,
+//   Pagination, CardMedia, CardHeader, Avatar, IconButton, CardActions, Tooltip
+// } from "@mui/material";
+// import { useNavigate } from "react-router-dom";
+// import { Fade } from "@mui/material";
+// import LocationOnIcon from "@mui/icons-material/LocationOn";
+// import PhoneIcon from "@mui/icons-material/Phone";
+// import FavoriteIcon from "@mui/icons-material/Favorite";
+// import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+// import ShareIcon from "@mui/icons-material/Share";
+// import Rating from '@mui/material/Rating';
+
+// const ServiceList = ({ search, category, location, businessName }) => {
+//   const [services, setServices] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const [wishlist, setWishlist] = useState({});
+//   const itemsPerPage = 10;
+//   const navigate = useNavigate();
+
+//   const currentUserId = "user123"; // Replace with actual user context if available
+
+//   useEffect(() => {
+//     const fetchServices = async () => {
+//       try {
+//         // const response = await axios.get("./services.json");
+//         const response = await axios.get("http://localhost:5000/services/"); 
+//         setServices(response.data.services);
+//       } catch (err) {
+//         setError("Failed to fetch services.");
+//         console.error(err);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+//     fetchServices();
+//   }, []);
+
+//   const toggleWishlist = (id) => {
+//     setWishlist((prev) => ({ ...prev, [id]: !prev[id] }));
+//   };
+
+//   const handleShare = (service) => {
+//     const shareData = {
+//       title: service.business_name,
+//       text: `${service.business_name} offers ${service.service}`,
+//       url: window.location.origin + `/service/${service.id}`,
+//     };
+//     if (navigator.share) {
+//       navigator.share(shareData).catch((err) => console.error("Share failed", err));
+//     } else {
+//       navigator.clipboard.writeText(shareData.url);
+//       alert("Link copied!");
+//     }
+//   };
+
+//   const filteredServices = services.filter((service) => {
+//     const matchesSearch = search
+//       ? service.service.toLowerCase().includes(search.toLowerCase()) ||
+//         service.business_name.toLowerCase().includes(search.toLowerCase())
+//       : true;
+//     const matchesCategory = category && category !== "all" ? service.service === category : true;
+//     const matchesLocation = location && location !== "all" ? service.contact.location === location : true;
+//     const matchesBusiness = businessName && businessName !== "all" ? service.business_name === businessName : true;
+//     return matchesSearch && matchesCategory && matchesLocation && matchesBusiness;
+//   });
+
+//   const totalPages = Math.ceil(filteredServices.length / itemsPerPage);
+//   const paginatedServices = filteredServices.slice(
+//     (currentPage - 1) * itemsPerPage,
+//     currentPage * itemsPerPage
+//   );
+
+//   const handleRatingChange = async (serviceId, newValue) => {
+//     try {
+//       const updated = services.map((service) => {
+//         if (service.id === serviceId) {
+//           const existing = service.ratings?.find((r) => r.customerId === currentUserId);
+//           if (existing) {
+//             existing.value = newValue;
+//           } else {
+//             if (!service.ratings) service.ratings = [];
+//             service.ratings.push({ customerId: currentUserId, value: newValue });
+//           }
+//         }
+//         return service;
+//       });
+//       setServices(updated);
+
+//       await axios.post("http://localhost:5000/services/ratings", {
+//         serviceId,
+//         customerId: currentUserId,
+//         value: newValue,
+//       });
+//     } catch (error) {
+//       console.error("Failed to save rating:", error);
+//     }
+//   };
+
+//   if (loading) return <CircularProgress sx={{ m: "40px auto", display: "block" }} />;
+//   if (error) return <Alert severity="error">{error}</Alert>;
+
+//   return (
+//     <Box sx={{ width: "95%", margin: "auto", pb: 4 }}>
+//       <Typography variant="h4" textAlign="center" sx={{ pt: 3, fontWeight: 700 }}>
+//         Explore Services Around You
+//       </Typography>
+
+//       {filteredServices.length === 0 ? (
+//         <Typography variant="h6" textAlign="center" mt={4}>
+//           No services found matching your criteria.
+//         </Typography>
+//       ) : (
+//         <>
+//           <Grid container spacing={3} mt={1}>
+//             {paginatedServices.map((service) => {
+//               const userRating = service.ratings?.find((r) => r.customerId === currentUserId)?.value || 0;
+//               return (
+//                 <Fade in={true} timeout={600} key={service.id}>
+//                   <Grid item xs={12} sm={6} md={3}>
+//                     <Card sx={{ maxWidth: 345, margin: "auto", boxShadow: 6, borderRadius: 4 }}>
+//                       <CardHeader
+//                         avatar={<Avatar sx={{ bgcolor: "#FF6201" }}>{service.business_name[0]}</Avatar>}
+//                         title={service.business_name}
+//                         subheader={service.service}
+//                       />
+//                       <CardMedia
+//                         component="img"
+//                         height="194"
+//                         image={service.image || "https://via.placeholder.com/400x300"}
+//                         alt={service.business_name}
+//                       />
+//                       <CardContent>
+//                         <Typography variant="body2" color="text.secondary" gutterBottom>
+//                           {service.description}
+//                         </Typography>
+//                         <Stack direction="row" spacing={1} alignItems="center" mb={1}>
+//                           <LocationOnIcon fontSize="small" />
+//                           <Typography variant="body2">{service.contact.location}</Typography>
+//                         </Stack>
+//                       </CardContent>
+
+//                       <CardActions disableSpacing>
+//                         <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', px: 1 }}>
+//                           <Rating
+//                             value={userRating}
+//                             onChange={(e, newValue) => {
+//                               e.stopPropagation();
+//                               handleRatingChange(service.id, newValue);
+//                             }}
+//                           />
+//                           <Box>
+//                             <Tooltip title="Share">
+//                               <IconButton onClick={(e) => { e.stopPropagation(); handleShare(service); }}>
+//                                 <ShareIcon />
+//                               </IconButton>
+//                             </Tooltip>
+//                             <Tooltip title="Add to Wishlist">
+//                               <IconButton onClick={(e) => { e.stopPropagation(); toggleWishlist(service.id); }}>
+//                                 {wishlist[service.id] ? <FavoriteIcon sx={{ color: "#e53935" }} /> : <FavoriteBorderIcon />}
+//                               </IconButton>
+//                             </Tooltip>
+//                           </Box>
+//                         </Box>
+//                       </CardActions>
+//                     </Card>
+//                   </Grid>
+//                 </Fade>
+//               );
+//             })}
+//           </Grid>
+//           <Box display="flex" justifyContent="center" mt={4}>
+//             <Pagination count={totalPages} page={currentPage} onChange={(e, val) => setCurrentPage(val)} />
+//           </Box>
+//         </>
+//       )}
+//     </Box>
+//   );
+// };
+
+// export default ServiceList;
 
 
 // import React, { useState, useEffect } from "react";

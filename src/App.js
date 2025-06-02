@@ -7,7 +7,7 @@ import Login from './components/Login';
 import SignIn from './components/SignIn';
 import ScrollToTop from "./components/ScrollToTop";
 import AdminPage from "./components/AdminPage";
-
+import { Myaccount } from "./components/Myaccount";
 function App() {
   return (
     <Router>
@@ -20,6 +20,11 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/admin" element={<AdminPage />} />
+        <Route path="/myaccount" element={<Myaccount/>}/>
+        {/* <Route path="/register-business" element={<RegisterBusiness />} />
+        <Route path="/pricing" element={<Pricing />} /> */}
+       
+        
       </Routes>
     </Router>
   );

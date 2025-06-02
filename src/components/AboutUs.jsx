@@ -4,8 +4,68 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import { useNavigate } from "react-router-dom";
+
 
 const AboutUs = () => {
+  const navigate = useNavigate();
+  const handleNavigation = (label) => {
+    switch (label) {
+      case "Official Page":
+        navigate("/admin");
+        break;
+      case "Register Your Business":
+        navigate("/register-business");
+        break;
+      case "Pricing":
+        navigate("/pricing");
+        break;
+      case "About SPN":
+        navigate("/aboutspn");
+        break;
+      case "Policy":
+        navigate("/policy");
+        break;  
+      case "Support":
+        navigate("/support");
+        break;  
+      case "Raise Ticket":
+        navigate("/raiseticket");
+        break;  
+      case "Account Profile":
+        navigate("/accountprofile");
+        break;
+      case "News":
+        navigate("/news");
+        break;
+      case "Careers":
+        navigate("/careers");
+        break;
+      case "Privacy":
+        navigate("/privacy");
+        break;  
+      case "About SPN":
+        navigate("/profile");
+        break;  
+      case "Instagram":
+        navigate("/instagram");
+        break;  
+      case "Facebook":
+        navigate("/facebook");
+        break;  
+      case "LinkedIn":
+        navigate("/profile");
+        break;  
+      case "WhatsApp":
+        navigate("/whatsapp");
+        break;  
+      
+        // Add more routes as needed
+      default:
+        console.log(`Clicked: ${label}`);
+    }
+  };
+
   return (
     <Box>
       <Box
@@ -55,9 +115,11 @@ const AboutUs = () => {
                     key={label}
                     startIcon={icon}
                     sx={buttonStyle}
+                    onClick={() => handleNavigation(label)}
                   >
                     {label}
                   </Button>
+
                 ))}
               </Box>
             </Grid>
@@ -89,7 +151,7 @@ const buttonStyle = {
   fontSize: "15px",
   justifyContent: "flex-start",
   px: 1,
-  py: 0.5,
+  py: 0,
   transition: "all 0.3s ease",
   '&:hover': {
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
@@ -105,6 +167,7 @@ const sections = [
       { label: "Pricing" },
       { label: "Register Your Business" },
       { label: "Become Delivery Partner" },
+      { label: "Official Page"},
     ],
   },
   {

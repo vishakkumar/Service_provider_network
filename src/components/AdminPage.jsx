@@ -43,7 +43,7 @@ const AdminPage = () => {
 
   const fetchServices = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/services");
+      const res = await axios.get("http://localhost:5000/services");
       setServices(res.data);
     } catch (err) {
       console.error("Failed to fetch services", err);
@@ -77,7 +77,7 @@ const AdminPage = () => {
     try {
       if (isEditing) {
         await axios.put(
-          `http://localhost:3000/services/${formData.id}`,
+          `http://localhost:5000/services/${formData.id}`,
           formData
         );
       } else {
@@ -85,7 +85,7 @@ const AdminPage = () => {
           ...formData,
           id: Date.now().toString(),
         };
-        await axios.post("http://localhost:3000/services", newService);
+        await axios.post("http://localhost:5000/services", newService);
       }
       fetchServices();
       handleDialogClose();
@@ -102,7 +102,7 @@ const AdminPage = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/services/${id}`);
+      await axios.delete(`http://localhost:5000/services/${id}`);
       fetchServices();
     } catch (err) {
       console.error("Error deleting service:", err);
@@ -113,7 +113,7 @@ const AdminPage = () => {
     try {
       const service = services.find((s) => s.id === id);
       if (!service) return;
-      await axios.patch(`http://localhost:3000/services/${id}`, {
+      await axios.patch(`http://localhost:5000/services/${id}`, {
         active: !service.active,
       });
       fetchServices();

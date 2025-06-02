@@ -28,10 +28,11 @@ const fadeInUp = keyframes`
 const HeaderPage = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const [anchorEl, setAnchorEl] = useState(null);
 
   useEffect(() => {
-    const loginStatus = localStorage.getItem("isLoggedIn") === "true";
+    const loginStatus = localStorage.getItem("flag") === "true";
     setIsLoggedIn(loginStatus);
 
     const header = document.getElementById("header");
@@ -55,12 +56,12 @@ const HeaderPage = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("flag");
     localStorage.removeItem("user");
-    localStorage.setItem("flag", "0");
+    localStorage.setItem("flag", "flase");
     setIsLoggedIn(false);
     handleMenuClose();
-    navigate("/login");
+    navigate("/");
   };
 
   return (
@@ -133,24 +134,24 @@ const HeaderPage = () => {
               position: "relative",
               overflow: "hidden",
               transition: "all 0.3s ease",
-              "&:hover": {
-                backgroundColor: "#e8f5e9",
-                boxShadow: "0 0 8px rgb(252, 108, 13)",
-                transform: "translateY(-1px) scale(1.03)",
-              },
-              "&::after": {
-                content: '""',
-                position: "absolute",
-                bottom: 0,
-                left: 0,
-                height: "2px",
-                width: "0%",
-                backgroundColor: "rgb(252, 108, 13)",
-                transition: "width 0.3s ease-in-out",
-              },
-              "&:hover::after": {
-                width: "100%",
-              },
+              // "&:hover": {
+              //   backgroundColor: "#e8f5e9",
+              //   boxShadow: "0 0 8px rgb(252, 108, 13)",
+              //   transform: "translateY(-1px) scale(1.03)",
+              // },
+              // "&::after": {
+              //   content: '""',
+              //   position: "absolute",
+              //   bottom: 0,
+              //   left: 0,
+              //   height: "2px",
+              //   width: "0%",
+              //   backgroundColor: "rgb(252, 108, 13)",
+              //   transition: "width 0.3s ease-in-out",
+              // },
+              // "&:hover::after": {
+              //   width: "100%",
+              // },
             }}
           >
             HOME
@@ -160,13 +161,34 @@ const HeaderPage = () => {
             <>
               <Button
                 onClick={() => navigate("/login")}
-                sx={{ color: "#FE9900", fontWeight: "Bold" }}
+                sx={{               color: "#FE9900",
+              fontSize: "15px",
+              px: 2.5,
+              py: 1,
+              borderRadius: "10px",
+              fontWeight: "bold",
+              textTransform: "none",
+              backgroundColor: "transparent",
+              position: "relative",
+              overflow: "hidden",
+              transition: "all 0.3s ease", }}
               >
                 LOGIN
               </Button>
               <Button
                 onClick={() => navigate("/signin")}
-                sx={{ color: "#FE9900", fontWeight: "Bold" }}
+                sx={{               
+                  color: "#FE9900",
+                  fontSize: "15px",
+                  px: 2.5,
+                  py: 1,
+                  borderRadius: "10px",
+                  fontWeight: "bold",
+                  textTransform: "none",
+                  backgroundColor: "transparent",
+                  position: "relative",
+                  overflow: "hidden",
+                  transition: "all 0.3s ease",}}
               >
                 SIGN IN
               </Button>
@@ -181,7 +203,7 @@ const HeaderPage = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleMenuClose}
               >
-                <MenuItem onClick={() => { navigate("/account"); handleMenuClose(); }}>
+                <MenuItem onClick={() => { navigate("/myaccount"); handleMenuClose(); }}>
                   My Account
                 </MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
